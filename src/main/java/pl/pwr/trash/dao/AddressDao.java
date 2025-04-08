@@ -1,5 +1,7 @@
 package pl.pwr.trash.dao;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import pl.pwr.trash.model.Address;
 import pl.pwr.trash.rowmapper.AddressRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -9,14 +11,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
+@RequiredArgsConstructor
 public class AddressDao {
 
     private final JdbcTemplate jdbcTemplate;
-    private final AddressRowMapper rowMapper = new AddressRowMapper();
+    private final AddressRowMapper rowMapper;
 
-    public AddressDao(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
 
     public List<Address> findAll() {
         String sql = "SELECT * FROM address";

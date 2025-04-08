@@ -1,5 +1,6 @@
 package pl.pwr.trash.dao;
 
+import lombok.RequiredArgsConstructor;
 import pl.pwr.trash.model.CategoryListing;
 import pl.pwr.trash.rowmapper.CategoryListingRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -8,14 +9,12 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
+@RequiredArgsConstructor
 public class CategoryListingDao {
 
     private final JdbcTemplate jdbcTemplate;
-    private final CategoryListingRowMapper rowMapper = new CategoryListingRowMapper();
+    private final CategoryListingRowMapper rowMapper;
 
-    public CategoryListingDao(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
 
     public List<CategoryListing> findAll() {
         String sql = "SELECT * FROM category_listing";

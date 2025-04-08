@@ -1,5 +1,6 @@
 package pl.pwr.trash.dao;
 
+import lombok.RequiredArgsConstructor;
 import pl.pwr.trash.model.Listing;
 import pl.pwr.trash.model.ListingStatus;
 import pl.pwr.trash.rowmapper.ListingRowMapper;
@@ -10,14 +11,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
+@RequiredArgsConstructor
 public class ListingDao {
 
     private final JdbcTemplate jdbcTemplate;
-    private final ListingRowMapper rowMapper = new ListingRowMapper();
+    private final ListingRowMapper rowMapper;
 
-    public ListingDao(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
 
     public List<Listing> findAll() {
         String sql = "SELECT * FROM listings";

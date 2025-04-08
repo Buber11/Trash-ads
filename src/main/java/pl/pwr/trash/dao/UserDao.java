@@ -1,5 +1,6 @@
 package pl.pwr.trash.dao;
 
+import lombok.RequiredArgsConstructor;
 import pl.pwr.trash.model.User;
 import pl.pwr.trash.rowmapper.UserRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -9,14 +10,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
+@RequiredArgsConstructor
 public class UserDao {
 
     private final JdbcTemplate jdbcTemplate;
-    private final UserRowMapper rowMapper = new UserRowMapper();
-
-    public UserDao(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+    private final UserRowMapper rowMapper;
 
     public List<User> findAll() {
         String sql = "SELECT * FROM users";
