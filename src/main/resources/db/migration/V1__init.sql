@@ -46,7 +46,7 @@ CREATE TABLE reservations (
     listing_id INT REFERENCES listings(id) ON DELETE CASCADE,
     user_id INT REFERENCES users(id) ON DELETE CASCADE,
     status_res reservation_status DEFAULT 'pending',
-    order_price NUMERIC(10,2) NOT NULL,
+    queue NUMERIC NOT NULL,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
