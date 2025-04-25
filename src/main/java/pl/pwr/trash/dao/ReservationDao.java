@@ -35,18 +35,19 @@ public class ReservationDao {
 
     public int save(Reservation reservation) {
         String sql = """
-            INSERT INTO reservations (listing_id, user_id, status_res, order_price, created_at, updated_at)
-            VALUES (?, ?, ?, ?, ?, ?)
-        """;
+        INSERT INTO reservations (listing_id, user_id, status_res, order_price, created_at, updated_at)
+        VALUES (?, ?, CAST(? AS reservation_status), ?, ?, ?)
+    """;
         return jdbcTemplate.update(sql,
                 reservation.getListingId(),
                 reservation.getUserId(),
-                reservation.getStatusRes().name(),
+                reservation.getStatusRes().name().toLowerCase(), // <- też ważne!
                 reservation.getOrderPrice(),
                 reservation.getCreatedAt(),
                 reservation.getUpdatedAt()
         );
     }
+
 
     public int update(Reservation reservation) {
         String sql = """
@@ -57,7 +58,7 @@ public class ReservationDao {
         return jdbcTemplate.update(sql,
                 reservation.getListingId(),
                 reservation.getUserId(),
-                reservation.getStatusRes().name(),
+                reservation.getStatusRes().name().toLowerCase(),
                 reservation.getOrderPrice(),
                 reservation.getCreatedAt(),
                 reservation.getUpdatedAt(),
