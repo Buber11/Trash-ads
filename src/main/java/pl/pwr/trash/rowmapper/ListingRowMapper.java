@@ -8,8 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
-import java.time.ZonedDateTime;
 
 public class ListingRowMapper implements RowMapper<Listing> {
     @Override
