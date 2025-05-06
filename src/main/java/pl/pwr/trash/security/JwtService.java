@@ -14,7 +14,7 @@ public interface JwtService {
 
     String extractUsername(String token);
 
-    Long extractUserId(String token);
+    String extractUserId(String token);
 
     String extractToken(String authHeader);
 

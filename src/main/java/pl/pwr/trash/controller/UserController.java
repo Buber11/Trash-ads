@@ -49,12 +49,4 @@ public class UserController {
         userService.updateUser(httpRequest,id,userRequest);
         return ResponseEntity.noContent().build();
     }
-    @PostMapping()
-    public ResponseEntity createUser(
-            HttpServletRequest httpServletRequest,
-            @RequestBody @Valid UserRequest userRequest
-    ){
-        userService.createUser(httpServletRequest, userRequest);
-        return ResponseEntity.noContent().build();
-    }
 }

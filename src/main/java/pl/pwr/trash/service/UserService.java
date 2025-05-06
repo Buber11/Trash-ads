@@ -14,6 +14,5 @@ public interface UserService {
     void updateUser(HttpServletRequest httpServletRequest,
                     Long id,
                     UserRequest userRequest);
-    void createUser(HttpServletRequest httpServletRequest,
-                    UserRequest userRequest);
+    void createUser(UserRequest userRequest);
 }

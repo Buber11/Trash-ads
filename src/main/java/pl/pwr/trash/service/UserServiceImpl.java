@@ -57,14 +57,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void createUser(HttpServletRequest httpServletRequest,
-                           UserRequest userRequest) {
+    public void createUser(UserRequest userRequest) {
         User user = User.builder()
                 .email(userRequest.getEmail())
                 .passwordHash(passwordEncoder.encode(userRequest.getPassword()))
                 .role(userRequest.getRole())
                 .build();
-
         userDao.save(user);
     }
 }

@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.math.BigDecimal;
+import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 
 public class ListingRowMapper implements RowMapper<Listing> {
     @Override
@@ -19,9 +21,9 @@ public class ListingRowMapper implements RowMapper<Listing> {
                 rs.getBigDecimal("price"),
                 rs.getString("photo"),
                 rs.getInt("user_id"),
-                ListingStatus.valueOf(rs.getString("status_lis")),
-                rs.getObject("created_at", LocalDateTime.class),
-                rs.getObject("updated_at", LocalDateTime.class)
+                ListingStatus.valueOf(rs.getString("status_lis").toUpperCase()),
+                rs.getObject("created_at", OffsetDateTime.class),
+                rs.getObject("updated_at", OffsetDateTime.class)
         );
     }
 }

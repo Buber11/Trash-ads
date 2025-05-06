@@ -16,6 +16,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        ex.printStackTrace();
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getFieldErrors().forEach(error ->
                 errors.put(error.getField(), error.getDefaultMessage())
@@ -44,6 +45,17 @@ public class GlobalExceptionHandler {
                 "Check if your data are valid",
                 400,
                 e.getMessage()
+        );
+    }
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseRCF7808 handleIllegalArgument(RuntimeException e){
+        return new ResponseRCF7808(
+                "api/v1/resoures/not-found",
+                "Your resource doesn't exist",
+                e.getMessage(),
+                400,
+                null
         );
     }
 

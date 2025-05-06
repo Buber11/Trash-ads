@@ -23,6 +23,7 @@ public class SecurityConfiguration {
     public static final String[] PUBLIC_ENDPOINTS = {
             "/api/v1/user",
             "/api/v1/auth/register",
+            "/api/v1/auth/login",
     };
 
     private final AuthenticationProvider authenticationProvider;

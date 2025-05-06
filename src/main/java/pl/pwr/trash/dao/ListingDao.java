@@ -1,6 +1,9 @@
 package pl.pwr.trash.dao;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import pl.pwr.trash.model.Listing;
 import pl.pwr.trash.model.ListingStatus;
 import pl.pwr.trash.rowmapper.ListingRowMapper;
@@ -29,15 +32,26 @@ public class ListingDao {
         return result.stream().findFirst();
     }
 
-    public List<Listing> findByUserId(Integer userId) {
-        String sql = "SELECT * FROM listings WHERE user_id = ?";
-        return jdbcTemplate.query(sql, rowMapper, userId);
+    public Page<Listing> findByUserId(Integer userId, Pageable pageable) {
+        String sql = "SELECT * FROM listings WHERE user_id = ? LIMIT ? OFFSET ?";
+        List<Listing> listings = jdbcTemplate.query(
+                sql,
+                rowMapper,
+                userId,
+                pageable.getPageSize(),
+                pageable.getOffset()
+        );
+
+        String countSql = "SELECT COUNT(*) FROM listings WHERE user_id = ?";
+        Integer total = jdbcTemplate.queryForObject(countSql, Integer.class, userId);
+
+        return new PageImpl<>(listings, pageable, total);
     }
 
     public int save(Listing listing) {
         String sql = """
             INSERT INTO listings (title, description, price, photo, user_id, status_lis, created_at, updated_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?::listing_status, ?, ?)
         """;
         return jdbcTemplate.update(sql,
                 listing.getTitle(),
@@ -45,7 +59,7 @@ public class ListingDao {
                 listing.getPrice(),
                 listing.getPhoto(),
                 listing.getUserId(),
-                listing.getStatusLis().name(),
+                listing.getStatusLis().getStatus(),
                 listing.getCreatedAt(),
                 listing.getUpdatedAt()
         );
@@ -63,7 +77,7 @@ public class ListingDao {
                 listing.getPrice(),
                 listing.getPhoto(),
                 listing.getUserId(),
-                listing.getStatusLis().name(),
+                listing.getStatusLis().getStatus(),
                 listing.getCreatedAt(),
                 listing.getUpdatedAt(),
                 listing.getId()
