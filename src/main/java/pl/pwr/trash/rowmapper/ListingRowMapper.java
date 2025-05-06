@@ -19,9 +19,9 @@ public class ListingRowMapper implements RowMapper<Listing> {
                 rs.getBigDecimal("price"),
                 rs.getString("photo"),
                 rs.getInt("user_id"),
-                ListingStatus.valueOf(rs.getString("status_lis")),
-                rs.getObject("created_at", LocalDateTime.class),
-                rs.getObject("updated_at", LocalDateTime.class)
+                ListingStatus.valueOf(rs.getString("status_lis").toUpperCase()),
+                rs.getTimestamp("created_at").toLocalDateTime(),
+                rs.getTimestamp("updated_at").toLocalDateTime()
         );
     }
 }
