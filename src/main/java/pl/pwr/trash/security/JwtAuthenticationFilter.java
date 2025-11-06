@@ -2,6 +2,7 @@ package pl.pwr.trash.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     ) throws ServletException, IOException {
         String requestURI = request.getRequestURI();
         System.out.println("Request URI: " + requestURI);
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                System.out.println("Cookie found: " + cookie.getName() + " = " + cookie.getValue());
+            }
+        } else {
+            System.out.println("No cookies found in request!");
+        }
 
         // Skip public endpoints
         if (Arrays.stream(SecurityConfiguration.PUBLIC_ENDPOINTS).anyMatch(requestURI::startsWith)) {

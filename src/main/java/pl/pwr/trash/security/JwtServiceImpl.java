@@ -109,6 +109,7 @@ public class JwtServiceImpl implements JwtService {
         String jwtToken = generateToken(extraClaims, (UserDetails) user);
         Cookie cookie = new Cookie(nameOfCookie, jwtToken);
         configureCookie(cookie);
+        cookie.setSecure(false);
         return cookie;
     }
 
